@@ -1,41 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery - Maboneng Youth Arts Collective</title>
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+    /* --- Responsive Gllery Grid --- */
+    .art-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .art-grid img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .art-grid img:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+    }
+
+    /* --- Lightbox Styling --- */
+    #lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        backdrop-filter: blur(3px);
+        background: rgba(0, 0, 0, 0.85);
+        display: none;
+        justify-content: center;
+        align-items: center
+    }
+
+    #lightbox img {
+        max-width: 90%;
+        max-height: 80vh;
+        border-radius: 12px;
+        box-shadow: 0px 4px 20px rgba(225,225,225,0.4);
+    }
+
+    /* --- Close Button --- */
+    #lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        font-size: 40px;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    #lightbox-close:hover {
+        transform: scale(1.2)
+    }
+
+    /* Footer timestamp */
+    footer p {
+        margin: 0;
+    }
+
+    #timestamp {
+        display: block;
+        margin-top: 5px;
+        color: #ccc;
+        font-size: 0.9em;
+    }
+
+    /* Professional Gallery */
+.art-grid {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-gap: 20px;
+    padding: 10px;
+}
+
+.art-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform .3s ease;
+}
+
+.art-item:hover {
+    transform: scale(1.02);
+}
+
+.gallery-img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    display: block;
+    transition: .35s ease-in-out;
+}
+
+.art-item:hover .gallery-img {
+    filter: brightness(80%);
+}
+
+/* Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+
+    </style>
 </head>
+
 <body>
+    <picture>  
+        <img src="./assets/Youth Collective Banner.webp" alt="Maboneng Youth Arts Collective Banner" class="banner" loading="lazy">
+    </picture>
     <header>
         <nav>
-            <img src="./assets/OIP.webp" alt="Maboneng Youth Arts Collective Logo" class="logo">
+            <img src="./assets/Youth Collective Banner.webp" alt="Maboneng Youth Arts Collective Logo" class="logo" style="height: 50px;">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="programs.html">Programs</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
                 <li><a href="artists.html">Artists</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="donate.html">Donate</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="POE.html">POE</a></li>
             </ul>
         </nav>
     </header>
+
+    <!-- Main Content -->
     <main>
         <section>
-            <h1>Gallery</h1>
+            <h1 style="text-align: center; margin-top: 20px;">Gallery</h1>
+
             <div class="art-grid">
-                <img src="./assets/download (1).webp" alt="Youth Art by Sello Mokwena">
-                <img src="./assets/download.webp" alt="Youth Art by Thabang Moshidi">
-                <img src="./assets/OIP (3).webp" alt="Youth Art by Karabo Phago">
-                <img src="./assets/OIP (4).webp" alt="Youth Art by Naledi Dlamini">
-                <img src="./assets/OIP (5).webp" alt="Youth Art by Amina Zulu">
+                <img src="./assets/The Birds.webp" alt="Youth Art by Sello Mokwena" onclick="openLightbox(this)" loading="lazy">
+                <img src="./assets/Let's dance.webp" alt="Youth Art by Thabang Moshidi" onclick="openLightbox(this)" loading="lazy">
+                <img src="./assets/Half of me.webp" alt="Youth Art by Karabo Phago" onclick="openLightbox(this)" loading="lazy">
+                <img src="./assets/Blossom.webp" alt="Youth Art by Naledi Dlamini" onclick="openLightbox(this)" loading="lazy">
+                <img src="./assets/The town.webp" alt="Youth Art by Amina Zulu" onclick="openLightbox(this)" loading="lazy">
             </div>
+        </section>
+        </main>
+
+        <!-- Lightbox -->
+        <div id="lightbox" onclick="closeLightbox()">
+            <span id="lightbox-close"></span>
+            <img id="lightbox-image" src="">
+        </div>
+    
+    <!-- Footer -->
     <footer>
         <p>&copy; 2025 Maboneng Youth Arts Collective. All rights reserved.</p>
+        <span id="timestamp"></span>
     </footer>
-    <script src="js/main.js"></script>
+
+    <script>
+
+        /* --- Lightbox Functions ---*/
+        function openLightbox(image) {
+            document.getElementById("lightbox").style.display = "flex";
+            document.getElementById("lightbox-image").src = image.src;
+        }
+
+         function closeLightbox() {
+            document.getElementById("lightbox").style.display = "none";
+        }
+
+        // --- Dynamic Timestamp ---
+        function updateTimestamp() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            document.getElementById("timestamp").textContent =`Current time: ${now.toLocaleDateString('en-GB', options)}`; 
+        }
+        // update timestamp on page load and every minute
+            updateTimestamp();  
+            setInterval(updateTimestamp, 1000); 
+    </script>
 </body>
 </html>
+
+
+
+

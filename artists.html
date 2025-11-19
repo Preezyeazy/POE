@@ -1,53 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artists - Maboneng Youth Arts Collective</title>
     <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* --- Layout & Responsive Styling --- */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            color: #222;
+            background: #fafafa;
+        }
+
+        header nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #222;
+            color: white;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .banner {
+            height: auto;
+        }
+
+        /* --- Artist Profiles --- */
+        .artist-profiles {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content:center;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .artist-card {
+            background: white;
+            border-radius: 10px;
+            width: 280px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .artist-card:hover {
+            transform: scale(1.05);
+        }
+
+        .artist-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .artist-card h2 {
+            margin: 0 10px 15px;
+            color: #333;
+        }
+
+        .artist-card p {
+            margin: 0 10px 15px;
+            color: #555;
+        }
+
+        /* --- Lightbox --- */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            margin: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        #lightbox:target {
+            display: block;
+        }
+
+        /* LIGHTBOX BASE */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(1.1); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* LIGHTBOX IMAGE */
+.lightbox img {
+    max-width: 85%;
+    max-height: 80%;
+    border-radius: 10px;
+    animation: zoomIn 0.4s ease;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.85); }
+    to { transform: scale(1); }
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+}
+
+/* NEXT & PREVIOUS ARROWS */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    font-size: 50px;
+    padding: 10px;
+    color: white;
+    user-select: none;
+    transition: 0.3s;
+}
+
+.prev:hover, .next:hover {
+    transform: scale(1.3);
+}
+
+.prev {
+    left: 30px;
+}
+
+.next {
+    right: 30px;
+}
+
+/* MOBILE SWIPE SUPPORT */
+@media (max-width: 600px) {
+    .prev, .next {
+        font-size: 35px;
+    }
+}
+
+
+        /* --- Footer --- */
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 15px 10px;
+            margin-top: 30px;
+        }
+
+        #timestamp {
+            font-size: 0.9em;
+            color: #bbb;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .artist-profiles {
+                flex-direction: column;
+                align-items: center;
+            }
+            .artist-card {
+                width: 50%;
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <picture>  
+        <img src="./assets/Youth Collective Banner.webp" alt="Maboneng Youth Arts Collective Banner" class="banner" loading="lazy">
+    </picture>
     <header>
         <nav>
-            <img src="./assets/OIP.webp" alt="Maboneng Youth Arts Collective Logo" class="logo">
+            <img src="./assets/Youth Collective Banner.webp" alt="Maboneng Youth Arts Collective Logo" class="logo" style="height: 50px;">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="programs.html">Programs</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="artists.html">Artists</a></li>
+                <li><a href="artists.html" class="active">Artists</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="donate.html">Donate</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="POE.html">POE</a></li>
             </ul>
         </nav>
     </header>
+
     <main>
         <section>
-            <h1>Meet Our Youth Artists</h1>
+            <h1 style="text-align:center; margin-top:20px;">Meet Our Youth Artists</h1>
             <div class="artist-profiles">
                 <div class="artist-card">
-                    <img src="./assets/ad (2).webp" alt="Artist Thabo">
+                    <img src="./assets/Artist 1.webp" alt="Artist Thabo" onclick="openLightbox(this)" loading="lazy">
                     <h2>Thabo Nkosi</h2>
                     <p>Painter & Muralist. Thabo’s vibrant murals can be seen across Maboneng.</p>
                 </div>
                 <div class="artist-card">
-                    <img src="./assets/kkkk.jpeg" alt="Artist Kabelo">
+                    <img src="./assets/Artist 2.jpeg" alt="Artist Kabelo" onclick="openLightbox(this)" loading="lazy">
                     <h2>Kabelo Mokoena</h2>
                     <p>Spoken Word Poet. Kabelo’s words inspire and challenge the community.</p>
                 </div>
                 <div class="artist-card">
-                    <img src="./assets/mmmm.jpeg" alt="Artist Mandy">
+                    <img src="./assets/Artist 3.jpeg" alt="Artist Mandy" onclick="openLightbox(this)" loading="lazy">
                     <h2>Mandy McTominay</h2>
                     <p>Dancer & Choreographer. Mandy leads our youth dance workshops.</p>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- Enhanced Lightbox -->
+     <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+        <span class="close-btn">&times;</span>
+        <img id="lightbox-image" src="" alt="Expanded Artist Image">
+        <span class="prev" onclick="prevImage(event)">&#10094</span>
+        <span class="next" onclick="nextImage(event)">&#10095</span>
+     </div>
+
+    <!-- Lightbox -->
+     <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-image" src="" alt="Full Size Artist Image">
+     </div>
+
+     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Maboneng Youth Arts Collective. All rights reserved.</p>
+        <span id="timestamp"></span>
     </footer>
-    <script src="js/main.js"></script>
+
+    <script>
+        // --- Lightbox Functionality ---
+        function openLightbox(img) {
+            document.getElementById("lightbox").style.display = "flex";
+            const lightboxImage = document.getElementById("lightbox-image").src = img.src;
+            
+        }
+
+        function closeLightbox() {
+            document.getElementById("lightbox").style.display = "none";
+        }
+
+        // --- Dynamic Timestamp ---
+        function updateTimestamp() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            document.getElementById("timestamp").textContent =`Current time: ${now.toLocaleDateString('en-GB', options)}`; 
+        }
+        // update timestamp on page load and every minute
+            updateTimestamp();  
+            setInterval(updateTimestamp, 1000); 
+        // Store all artist images
+const galleryImages = Array.from(document.querySelectorAll(".artist-card img"));
+let currentIndex = 0;
+
+// Open Lightbox
+function openLightbox(img) {
+    currentIndex = galleryImages.indexOf(img);
+    displayImage();
+    document.getElementById("lightbox").style.display = "flex";
+}
+
+// Display current image in lightbox
+function displayImage() {
+    const lightboxImage = document.getElementById("lightbox-image");
+    lightboxImage.src = galleryImages[currentIndex].src;
+}
+
+// Close lightbox (prevent closing when clicking arrows or image)
+function closeLightbox(event) {
+    if (event.target === event.currentTarget || event.target.classList.contains("close-btn")) {
+        document.getElementById("lightbox").style.display = "none";
+    }
+}
+
+// Next Image
+function nextImage(event) {
+    event.stopPropagation();
+    currentIndex = (currentIndex + 1) % galleryImages.length;
+    displayImage();
+}
+
+// Previous Image
+function prevImage(event) {
+    event.stopPropagation();
+    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+    displayImage();
+}
+
+// Keyboard Controls
+document.addEventListener("keydown", function(event) {
+    const lightbox = document.getElementById("lightbox");
+
+    if (lightbox.style.display === "flex") {
+        if (event.key === "ArrowRight") nextImage(event);
+        if (event.key === "ArrowLeft") prevImage(event);
+        if (event.key === "Escape") lightbox.style.display = "none";
+    }
+});
+
+// Touch / Swipe Support
+let touchStartX = 0;
+
+document.getElementById("lightbox").addEventListener("touchstart", function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.getElementById("lightbox").addEventListener("touchend", function(e) {
+    let touchEndX = e.changedTouches[0].screenX;
+    if (touchEndX < touchStartX - 50) nextImage(e);     // swipe left
+    if (touchEndX > touchStartX + 50) prevImage(e);     // swipe right
+});
+
+    </script>
 </body>
 </html>
+
+
+
