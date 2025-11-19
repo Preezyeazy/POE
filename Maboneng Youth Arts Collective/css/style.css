@@ -212,5 +212,245 @@ button:focus {
     
     }      
 
+.timestamp {
+    margin-left: 20px;
+    font-size: 0.9rem;
+    color: #f2f2f2;
+    font-weight: 400;
+}
+
+/* === CSS Reset === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* === Body & Base Typography === */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: #f7f7f7;
+    color: #333;
+    padding: 0;
+}
+
+/* === Header & Navigation === */
+header {
+    background: #222;
+    color: #fff;
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+nav .logo {
+    height: 50px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+/* Pseudo-class for hover effect */
+nav ul li a:hover,
+nav ul li a:focus {
+    color: #e0c341;
+}
+
+/* Underline animation using pseudo-element */
+nav ul li a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #e0c341;
+    transition: width 0.3s;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+nav ul li a:hover::after,
+nav ul li a:focus::after {
+    width: 100%;
+}
+
+/* === Hero Section === */
+.hero {
+    background: #e0c341;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.hero .btn {
+    background: #222;
+    color: #fff;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* Hover and focus pseudo-classes for buttons */
+.hero .btn:hover,
+.hero .btn:focus {
+    background: #111;
+    transform: translateY(-2px);
+}
+
+/* === Featured Art & Gallery === */
+.featured-art,
+.upcoming-events {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.art-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.art-grid img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hover effect */
+.art-grid img:hover,
+.art-grid img:focus {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.25);
+}
+
+/* === Forms === */
+form {
+    max-width: 600px;
+    margin: 40px auto;
+    display: grid;
+    gap: 15px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+/* Pseudo-class focus for inputs */
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #e0c341;
+    box-shadow: 0 0 5px rgba(224,195,65,0.5);
+    outline: none;
+}
+
+/* Submit button */
+form button[type="submit"] {
+    background: #222;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+form button[type="submit"]:hover,
+form button[type="submit"]:focus {
+    background: #111;
+    transform: translateY(-2px);
+}
+
+/* === Footer === */
+footer {
+    background: #222;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.timestamp {
+    font-size: 0.9rem;
+    color: #f2f2f2;
+    margin-top: 5px;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .art-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+    .art-grid img {
+        width: 90%;
+        height: auto;
+    }
+    .hero {
+        padding: 30px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
+
 
 

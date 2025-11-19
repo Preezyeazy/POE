@@ -6,18 +6,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maboneng Youth Arts Collective</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* FEATURED ARTWORK GRID */
+.art-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.art-grid img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* Ensures clean cropping */
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect (Desktop Only) */
+.art-grid img:hover {
+    transform: scale(1.05);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .art-grid img {
+        height: 180px;
+    }
+}
+
+/* PRO GALLERY SECTION */
+.pro-gallery {
+    padding: 40px 20px;
+}
+
+.pro-gallery h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2rem;
+    color: #222;
+}
+
+/* Masonry Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+/* Image Containers */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+/* Hover Effect */
+.gallery-item:hover img {
+    transform: scale(1.08);
+    opacity: 0.9;
+}
+
+/* Masonry modifiers */
+.gallery-item.tall {
+    grid-row: span 2;
+}
+
+.gallery-item.wide {
+    grid-column: span 2;
+}
+
+/* Lightbox Viewer */
+#lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+}
+
+#lightbox img {
+    max-width: 90%;
+    max-height: 85vh;
+    border-radius: 12px;
+    box-shadow: 0px 0px 20px rgba(255,255,255,0.2);
+}
+
+/* Close on click */
+#lightbox.active {
+    display: flex;
+}
+
+/* Mobile scaling */
+@media (max-width: 600px) {
+    .gallery-item.tall,
+    .gallery-item.wide {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+}
+
+    </style>
+
 </head>
 <body>
     <picture>
-        <source media="(max-width: 480px)" srcset="./assets">
-        <source media="(max-width: 768px)" srcset="./assets">   
-        <img src="./assets/OIP.webp" alt="Maboneng Youth Arts Collective Banner" class="banner">
+        <img src="./assets/Youth Collective Banner.webp" alt="Maboneng Youth Arts Collective Banner" class="banner" loading="lazy">
     </picture>
     <header>
         <nav>
-            <img src="./assets/OIP.webp" alt="Maboneng Youth Arts Collective Logo" class="logo">
+            <img src="./assets/Youth Collective Banner.webp" alt="Maboneng Youth Arts Collective Logo" class="logo" style="height: 50px;">
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="programs.html">Programs</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
@@ -25,24 +136,53 @@
                 <li><a href="events.html">Events</a></li>
                 <li><a href="donate.html">Donate</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="POE.html">POE</a></li>
             </ul>
+
+            <!-- DATE + CLOCK DISPLAY -->
+            <div class="header-time">
+                <span id="datestamp"></span>
+                <span id="clock"></span>
+            </div> 
+ 
         </nav>
     </header>
+
     <main>
         <section class="hero">
             <h1>Uplifting Youth Through Art</h1>
             <p>Spoken word, dance, music, visual arts, and street theatre in Johannesburg’s inner city.</p>
             <a href="events.html" class="btn">See Upcoming Events</a>
         </section>
+
         <section class="featured-art">
             <h2>Featured Artwork</h2>
-            <div class="art-grid">
-                <img src="./assets/OIP.jpeg" alt="Featured Art 1">
-                <img src="./assets/OIP (1).webp" alt="Featured Art 2">
-                <img src="./assets/OIP (2).webp" alt="Featured Art 3">
+            <section class="pro-gallery">
+    <h2>Featured Artwork</h2>
+
+    <div class="gallery-grid">
+
+        <div class="gallery-item">
+            <img src="./assets/Katlego Chauke(Shebeshxt).jpeg" alt="Artwork 1" onclick="openLightbox('./assets/Katlego Chauke(Shebeshxt).jpeg')" loading="lazy">
+        </div>
+
+        <div class="gallery-item tall">
+            <img src="./assets/Katlego Chauke(Blingskatz).webp" alt="Artwork 2" onclick="openLightbox('./assets/Katlego Chauke(Blingskatz).webp')" loading="lazy">
+        </div>
+
+        <div class="gallery-item">
+            <img src="./assets/Katlego Chauke(Drawing).webp" alt="Artwork 3" onclick="openLightbox('./assets/Katlego Chauke(Drawing).webp')" loading="lazy">
+        </div>
+
+        <!-- Add more artwork here -->
+
             </div>
         </section>
+
+        <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Full Image">
+</div>
+
+
         <section class="upcoming-events">
             <h2>Upcoming Events</h2>
             <ul>
@@ -51,27 +191,60 @@
                 <li>Music Workshop - 29 Sept 2025</li>
             </ul>
         </section>
+
     </main>
+
     <footer>
         <p>&copy; 2025 Maboneng Youth Arts Collective. All rights reserved.</p>
     </footer>
-    <script src="js/main.js"></script>
+
+    <!-- LIVE DATE + CLOCK SCRIPT -->
+    <script>
+/* --- Lightbox Functions ---*/
+function openLightbox(src) {
+    const lightbox = document.getElementById("lightbox");
+    const img = document.getElementById("lightbox-img");
+
+    img.src = src;
+    lightbox.classList.add("active");
+}
+
+function closeLightbox() {
+    document.getElementById("lightbox").classList.remove("active");
+}
+
+         function updateTimestamp() {
+            const dateElemnt = document.getElementById("datestamp");
+
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateElemnt.textContent = now.toLocaleDateString('en-GB', options);
+         }
+
+        function updateClock() {
+            const clockElement = document.getElementById("clock");
+    
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+        
+            // Add Leading zeros
+            hours = (hours < 10 ? "0" : "") + hours;
+            minutes = (minutes < 10 ? "0" : "") + minutes;
+            seconds = (seconds < 10 ? "0" : "") + seconds;
+
+            clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Update both at Load + every second
+        updateTimestamp();
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+
 </body>
 </html>
 
-## Changelog
-
-### [2025-09-24] — Part 2 CSS & Responsive Design Updates
-
-- Created and linked `style.css` to all HTML files.
-- Applied base styles: font family (`Helvetica Neue`), default font size (16px), line height, and background color.
-- Added CSS Reset for consistency across browsers.
-- Implemented Grid layout for `.container` with 3-column desktop layout.
-- Styled headings and paragraphs using typography scale (rem units).
-- Styled interactive buttons with hover and focus pseudo-classes.
-- Added responsive breakpoints:
-  - **768px (Tablet)**: switches to 2-column layout.
-  - **480px (Mobile)**: switches to 1-column layout and full-width buttons.
-- Used `rem`, `em`, and `%` units to improve responsiveness.
 
 
