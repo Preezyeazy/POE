@@ -1,15 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Maboneng Youth Arts Collective</title>
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Footer Styling */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 10px;
+            margin-top: 30px;
+        }
+
+        #timestamp {
+            font-size: 0.9em;
+            color: #bbb;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Form Styling */
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input, textarea, select, button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #333;
+            box-shadow: 0 0 5px rgba(0,0,0,0.25);
+        }
+        
+        .error {
+            border-color: red !important;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 0.85em;
+            margin-top: -10px;
+        }
+
+        button {
+            padding: 12px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        /* SUCCESS MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            color: #444;
+            font-weight: bold;
+        }
+
+        #modalOk {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: #333;
+            color: white;
+            border: none;   
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #modalOk:hover {
+            background-color: #555;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; }
+            to {opacity: 1; }
+        }
+        @keyframes slideDown {
+            from {transform: translateY(-20px); opacity: 0; }
+            to {transform: translateY(0); opacity: 1; }
+        }
+
+        .map {
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
+    <picture> 
+        <img src="./assets/Youth Collective Banner.webp" alt="Maboneng Youth Arts Collective Banner" class="banner">
+    </picture>
+
     <header>
         <nav>
-            <img src="./assets/OIP.webp" alt="Maboneng Youth Arts Collective Logo" class="logo">
+            <img src="./assets/Youth Collective Banner.webp" alt="Maboneng Youth Arts Collective Logo" class="logo" style="height: 50px;">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
@@ -18,41 +142,287 @@
                 <li><a href="artists.html">Artists</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="donate.html">Donate</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="POE.html">POE</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
             </ul>
         </nav>
     </header>
+
     <main>
         <section>
             <h1>Contact Us</h1>
             <p>We’d love to hear from you! Reach out for collaborations, volunteering, or general inquiries.</p>
-            <form action="#" method="post">
+            
+            <!-- Contact Form -->
+            <form id="contactForm" action="mailto:info@mabonengyouthza.org.za" method="post">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" placeholder="Your name" required>
+                <div id="nameError" class="error-msg"></div>
+
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-                <!-- Google reCAPTCHA placeholder -->
-                <div class="g-recaptcha" data-sitekey="your_site_key"></div>
-                <button type="submit" class="btn">Send Message</button>
+                <input type="email" id="email" name="email" placeholder="you@example" required>
+                <div id="emailError" class="error-msg"></div>
+
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" placeholder="e.g., +27 123 456 7890" pattern="^\+?[0-9\s\-]{7,15}$" required>
+                <div id="phoneError" class="error-msg"></div>
+
+                <label for="message"> Type of Message:</label>
+                <select id="messageType" required>
+                    <option>-- Select Message Type --</option>
+                    <option>General Inquiry</option>
+                    <option>Collaboration</option>
+                    <option>Volunteering</option>
+                    <option>Other</option>
+                </select>
+                <div id="typeError" class="error-msg" aria-live="polite"></div>
+
+                <label for="message"> Your Message:</label>
+                <textarea id="message" name="message" rows="5" placeholder="Type your message here..." minlength="10" maxlength="500" required></textarea>
+                <div id="messageError" class="error-msg"></div>
+                
+                <button type="submit" class="btn" id="submitBtn" id="submitBtn">Send Message</button>
             </form>
+
             <h2>Other Ways to Connect</h2>
             <ul>
                 <li><a href="https://wa.me/yourwhatsapplink" target="_blank">WhatsApp Chat</a></li>
                 <li><a href="mailto:info@mabonengyouthza.org.za">Email Us</a></li>
             </ul>
+
+            <!-- Interactive Google Map -->
+            <div id="googleMap"></div>
             <div class="map">
-                <iframe src="https://www.google.com/maps?q=Maboneng,+Johannesburg&output=embed" width="300" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://www.google.com/maps?q=Maboneng,+Johannesburg&output=embed" width="300" height="200" style="border:0;" allowfullscreen loading="lazy"></iframe>
             </div>
         </section>
     </main>
+
+    <!-- Footer with Dynamic Timestamp -->
     <footer>
         <p>&copy; 2025 Maboneng Youth Arts Collective. All rights reserved.</p>
+        <span id="timestamp"></span>
     </footer>
-    <script src="js/main.js"></script>
-    <!-- Google reCAPTCHA script placeholder -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- SUCCESS MODAL-->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <h2>Message Sent!</h2>
+            <p>Thank you for reaching out. We will get back to you soon.</p>
+            <button id="modalOk">OK</button>
+        </div>
+    </div>
+
+    <!-- EmailJS SDK (optional) -->
+    <script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+
+    <script>
+        // === Configuration for client-side email (EmailJS) ===
+        // To enable email sending from the page, create a free account at https://www.emailjs.com/
+        // then provide your Service ID, Template ID and Public Key below.
+        const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'; // e.g. 'service_xxx'
+        const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'; // e.g. 'template_xxx'
+        const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'; // e.g. 'user_xxx'
+
+        // initialize emailjs if available and key provided
+        if (window.emailjs && EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+            try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch (e) { console.warn('EmailJS init failed', e); }
+        }
+
+        // Dynamic timestamp 
+        function updateTimestamp() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            document.getElementById('timestamp').textContent = `Current time: ${now.toLocaleDateString('en-GB', options)}`;
+        }
+
+        updateTimestamp();
+        setInterval(updateTimestamp, 60000); // Update every minute
+
+        /* Live Validation */
+        const fields = {
+            name: { el: document.getElementById('name'), error: document.getElementById('nameError') },
+            email: { el: document.getElementById('email'), error: document.getElementById('emailError') },
+            phone: { el: document.getElementById('phone'), error: document.getElementById('phoneError') },
+            messageType: { el: document.getElementById('messageType'), error: document.getElementById('typeError') },
+            message: { el: document.getElementById('message'), error: document.getElementById('messageError') },
+        };
+        
+        function validateField(key) {
+            const f = fields[key];
+            let valid = true;
+            let value = f.el.value.trim();
+            let msg = '';
+
+            if (key === 'name' && value.length < 2) {
+                msg = 'Name must be at least 2 characters.';
+                valid = false;
+            }
+            if (key === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)) {
+                msg = 'Invalid email format.';
+                valid = false;
+            }
+            if (key === 'phone' && !/^\+?[0-9\s\-]{7,15}$/.test(value)) {
+                msg = 'Invalid phone number.';
+                valid = false;
+            }
+            if (key === 'messageType') {
+                // for select, check selectedIndex (first option is placeholder)
+                if (f.el.selectedIndex === 0 || value === '' || value.indexOf('-- Select') === 0) {
+                    msg = 'Please select a message type.';
+                    valid = false;
+                }
+            }
+            if (key === 'message' && (value.length < 10 || value.length > 500)) {
+                msg = 'Message must be between 10 and 500 characters.';
+                valid = false;
+            }
+
+            f.error.textContent = msg;
+            f.el.classList.toggle('error', !valid);
+            return valid;
+        }
+
+        Object.keys(fields).forEach(key => {
+            const el = fields[key].el;
+            if (!el) return;
+            el.addEventListener('input', () => validateField(key));
+            // for select elements, also listen to change
+            el.addEventListener('change', () => validateField(key));
+        });
+
+        // run an initial validation pass to clear errors
+        Object.keys(fields).forEach(key => { if (fields[key].el) validateField(key); });
+
+        /* Modal */
+        const modal = document.getElementById('successModal');
+        const closeModalBtn = document.getElementById('modalClose');
+        const OkBtn = document.getElementById('modalOk');
+
+        function openModal() {modal.style.display = 'block'; }
+        function closeModal() {modal.style.display = 'none'; }
+
+        closeModalBtn.onclick = closeModal;
+        OkBtn.onclick = closeModal;
+        window.onclick = (event) => {if (event.target === modal) closeModal(); };
+
+        /* Submit Handler - validate and show an approved message with reference */
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let valid = true;
+            Object.keys(fields).forEach(key => {
+                if (!validateField(key)) valid = false;
+            });
+
+            if (valid) {
+                const submitBtn = document.getElementById('submitBtn');
+                const originalText = submitBtn ? submitBtn.textContent : 'Send Message';
+                if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending...'; }
+
+                // generate a short approval reference
+                function generateRef() {
+                    const now = new Date();
+                    const y = now.getFullYear();
+                    const m = String(now.getMonth() + 1).padStart(2, '0');
+                    const d = String(now.getDate()).padStart(2, '0');
+                    const rnd = Math.floor(1000 + Math.random() * 9000);
+                    return `MY-${y}${m}${d}-${rnd}`;
+                }
+
+                // capture values before sending / resetting
+                const formValues = {
+                    name: fields.name.el.value.trim(),
+                    email: fields.email.el.value.trim(),
+                    phone: fields.phone.el.value.trim(),
+                    type: fields.messageType.el ? fields.messageType.el.value : document.getElementById('messageType').value,
+                    message: fields.message.el.value.trim()
+                };
+
+                const ref = generateRef();
+                const templateParams = {
+                    from_name: formValues.name,
+                    from_email: formValues.email,
+                    phone: formValues.phone,
+                    message: formValues.message,
+                    message_type: formValues.type,
+                    reference: ref
+                };
+
+                // If EmailJS is configured, send the email; otherwise fall back to simulated demo flow
+                const emailjsConfigured = (window.emailjs && EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' && EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID');
+
+                function showApprovedModal(reference) {
+                    const modalTitle = modal.querySelector('h2');
+                    const modalBody = modal.querySelector('p');
+                    if (modalTitle) modalTitle.textContent = 'Approved';
+                    if (modalBody) modalBody.innerHTML = `Your message has been received and <strong>approved</strong>.<br>Reference: <code>${reference}</code>`;
+                    openModal();
+                    if (submitBtn) submitBtn.textContent = 'Thank you for your message';
+                    // reset form and restore button after a short delay
+                    this.reset();
+                    setTimeout(() => {
+                        if (submitBtn) { submitBtn.textContent = originalText; submitBtn.disabled = false; }
+                    }, 3000);
+                }
+
+                if (emailjsConfigured) {
+                    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                    .then(() => {
+                        showApprovedModal.call(this, ref);
+                    })
+                    .catch(err => {
+                        console.error('EmailJS error:', err);
+                        // show a friendly error and restore button
+                        if (submitBtn) { submitBtn.textContent = 'Send Message'; submitBtn.disabled = false; }
+                        alert('There was an error sending your message. Please try again later.');
+                    });
+                } else {
+                    // fallback demo behavior (no backend configured)
+                    setTimeout(() => {
+                        showApprovedModal.call(this, ref);
+                    }, 900);
+                }
+            }
+        });
+        
+        // Function to show feedback alert
+        function showFeedback(msg, type) {
+            const feedbackBox = document.getElementById('feedbackBox');
+            feedbackBox.style.display = 'block';
+            feedbackBox.style.backgroundColor = type === 'error' ? '#d4edda' : '#f8d7da';
+            feedbackBox.textContent = msg;
+            setTimeout(() => feedbackBox.style.display = 'none', 4000);
+        }   
+
+        // Google Maps initialization
+        function initMap() {
+            const maboneng = { lat: -26.203, lng: 28.058 }; // Johannesburg coordinates
+           
+            const map = new google.maps.Map(document.getElementById("googleMap"), {
+                zoom: 15,
+                center: maboneng,
+            });
+
+            const marker = new google.maps.Marker({
+                position: maboneng,
+                map: map,
+                title: "Maboneng Youth Arts Collective"
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: "<h3>Maboneng Youth Arts Collective</h3><p>Visit us in Johannesburg!</p>"
+            });
+
+            marker.addListener("click", () => infoWindow.open(map, marker));
+        }
+    </script> 
+
+    <!-- Load Google Maps JavaScript API -->
+    <script async
+      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">  
+    </script>
 </body>
 </html>
+
+
